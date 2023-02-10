@@ -37,7 +37,7 @@ extension AvatarPickerViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: avatarCellReuseIdentifier, for: indexPath as IndexPath) as! AvatarPickerCell
         
-        cell.avatarImageView.image = UIImage(named: String(format: "%@%d", Constants.kAvatarImagePrefix, indexPath.item + 1))
+        cell.avatarImageView.image = UIImage(named: "avatar/\(Avatar.allCases[indexPath.row].filename)")
         
         return cell
     }

@@ -81,11 +81,11 @@ class ChatViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWasShown(notification: NSNotification){
+    @objc func keyboardWasShown(notification: NSNotification){
         animateViewMoving(up: true, notification: notification)
     }
     
-    func keyboardWillBeHidden(notification: NSNotification){
+    @objc func keyboardWillBeHidden(notification: NSNotification){
         
         animateViewMoving(up: false, notification: notification)
     }
