@@ -145,7 +145,7 @@ extension ChatViewController : CBCentralManagerDelegate {
         
         if (central.state == .poweredOn){
             
-            self.centralManager?.scanForPeripherals(withServices: [Constants.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            self.centralManager?.scanForPeripherals(withServices: [WITAdvertData.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
         }
     }

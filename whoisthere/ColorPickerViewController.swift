@@ -47,7 +47,7 @@ extension ColorPickerViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var user =  User()
-        user.colorId = indexPath.item
+        user.paletteValue = indexPath.item
         storageManager.save(user)
         self.navigationController?.popViewController(animated: true)
     }

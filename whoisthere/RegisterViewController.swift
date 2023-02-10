@@ -83,7 +83,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         nextButton.setTitle(buttonTitle, for: .normal)
         
         avatarButton.setImage(user.avatar.uiImage, for: .normal) // UIImage(named: String(format: "%@%d", Constants.kAvatarImagePrefix, user.avatarId)), for: UIControlState.normal)
-        self.view.backgroundColor = Constants.colors[user.colorId]
+        self.view.backgroundColor = user.color
         
         nameTextField.text = user.name
     }

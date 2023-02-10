@@ -44,6 +44,7 @@ struct StorageManager {
         guard newUser.name != "ERROR" else { return false }
         var allUsers = allUsers()
         guard !allUsers.contains(newUser) else { return false }
+        allUsers.append(newUser)
         userDefaults.set(allUsers.jsonData(), forKey: allUserDatasKey)
         return true
     }

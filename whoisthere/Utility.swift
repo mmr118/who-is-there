@@ -12,7 +12,8 @@ extension UIColor {
 
     typealias Avatar = AvatarPalette
 
-    
+    static let avatarColors: [UIColor] = Avatar.allCases.map(\.color)
+
 }
 
 

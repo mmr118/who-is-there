@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-enum AvatarPalette: Int, CaseIterable, ColorPalette, Codable {
-    typealias RawColorValue = UIColor
+enum AvatarPalette: Int, CaseIterable, Codable {
+
     case jean
     case sky
     case grass
@@ -23,6 +23,6 @@ enum AvatarPalette: Int, CaseIterable, ColorPalette, Codable {
 
     var name: String { String(describing: self.self) }
 
+    var color: UIColor { UIColor(named: "Color/\(name)")! }
+
 }
-
-

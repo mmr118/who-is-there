@@ -13,9 +13,12 @@ struct User: Codable, Equatable, Hashable {
     var id: UUID = UUID()
     var name: String
     var avatar: Avatar = .allCases.randomElement()!
-    var paletteValue: String? // = 0
+    var paletteValue: Int? // = 0
 
-    var color: UIColor? { AvatarPalette(rawValue: paletteValue)?.rawColorValue }
+    var color: UIColor? {
+        guard let paletteValue = paletteValue else { return nil }
+        return AvatarPalette(rawValue: paletteValue)?.color
+    }
 
     var hasAllDataFilled: Bool { !name.isEmpty && avatar != .none }
 
@@ -28,7 +31,7 @@ struct User: Codable, Equatable, Hashable {
     init(_ name: String, avatar: Avatar, colorId: Int) {
         self.name = name
         self.avatar = avatar
-        self.colorId = colorId
+        self.paletteValue = colorId
     }
 
     static func ==(lhs: Self, rhs: Self) -> Bool {
