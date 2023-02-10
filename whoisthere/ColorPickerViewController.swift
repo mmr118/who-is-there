@@ -28,7 +28,7 @@ class ColorPickerViewController: UICollectionViewController {
 extension ColorPickerViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constants.colors.count
+        return AvatarPalette.allCases.count //  Constants.colors.count
     }
     
     // make a cell for each cell index path
@@ -36,7 +36,7 @@ extension ColorPickerViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)
         
-        cell.backgroundColor = Constants.colors[indexPath.item]
+        cell.backgroundColor = AvatarPalette(rawValue: indexPath.item)?.color
         
         return cell
     }

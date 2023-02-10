@@ -12,7 +12,6 @@
 		4E08FF871F13AFF300778FE7 /* AvatarPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E08FF861F13AFF300778FE7 /* AvatarPickerCell.swift */; };
 		4E4640261F13C1B600C8F94C /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4640251F13C1B600C8F94C /* ColorPickerViewController.swift */; };
 		4E4640291F13CC4A00C8F94C /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4640281F13CC4A00C8F94C /* AlertHelper.swift */; };
-		4E5B29421F13E64F00BF6CDA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B29411F13E64F00BF6CDA /* Constants.swift */; };
 		4E5B29471F14BB0100BF6CDA /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B29461F14BB0100BF6CDA /* MainCell.swift */; };
 		4E7A06911F14F00200888F8D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4E7A06901F14F00200888F8D /* Localizable.strings */; };
 		4E7A06941F14F0BA00888F8D /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06931F14F0BA00888F8D /* StringExtension.swift */; };
@@ -39,6 +38,8 @@
 		F93A029C2996849F0014492A /* WITAdvertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A029B2996849F0014492A /* WITAdvertData.swift */; };
 		F93A029F299688300014492A /* AvatarPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A029E299688300014492A /* AvatarPalette.swift */; };
 		F93A02A22996887B0014492A /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A02A12996887B0014492A /* ColorPalette.swift */; };
+		F9A57C002996936300389403 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A57BFF2996936300389403 /* ChatService.swift */; };
+		F9A57C032996B7A200389403 /* BTServiceConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A57C022996B7A200389403 /* BTServiceConfigurable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +65,6 @@
 		4E08FF861F13AFF300778FE7 /* AvatarPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarPickerCell.swift; sourceTree = "<group>"; };
 		4E4640251F13C1B600C8F94C /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		4E4640281F13CC4A00C8F94C /* AlertHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
-		4E5B29411F13E64F00BF6CDA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4E5B29461F14BB0100BF6CDA /* MainCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		4E7A06901F14F00200888F8D /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
 		4E7A06931F14F0BA00888F8D /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -97,6 +97,8 @@
 		F93A029B2996849F0014492A /* WITAdvertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WITAdvertData.swift; sourceTree = "<group>"; };
 		F93A029E299688300014492A /* AvatarPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPalette.swift; sourceTree = "<group>"; };
 		F93A02A12996887B0014492A /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		F9A57BFF2996936300389403 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		F9A57C022996B7A200389403 /* BTServiceConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTServiceConfigurable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,18 +144,6 @@
 				4EC2D1101F0D0E5200E51020 /* Info.plist */,
 			);
 			name = "Supporting Files ";
-			sourceTree = "<group>";
-		};
-		4E08FF6A1F13904400778FE7 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F93A0297299676140014492A /* StorageManager.swift */,
-				4E7A06A31F164D9E00888F8D /* Message.swift */,
-				4EC2D1351F0E53BA00E51020 /* Device.swift */,
-				4E7A06AA1F17683400888F8D /* User.swift */,
-				F93A029B2996849F0014492A /* WITAdvertData.swift */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		4E08FF6B1F13958500778FE7 /* Scenes */ = {
@@ -230,14 +220,6 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		4E7A06A01F1647FD00888F8D /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				4E5B29411F13E64F00BF6CDA /* Constants.swift */,
-			);
-			name = Constants;
-			sourceTree = "<group>";
-		};
 		4E7A06A51F165C8000888F8D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,15 +252,14 @@
 		4EC2D1031F0D0E5200E51020 /* whoisthere */ = {
 			isa = PBXGroup;
 			children = (
-				F93A02A02996886D0014492A /* Protocols */,
 				F93A02992996766D0014492A /* Utility.swift */,
+				F93A02A02996886D0014492A /* Protocols */,
 				F93A029D299688040014492A /* Enums */,
+				F9A57BFE299692CC00389403 /* Models */,
 				4E7A06A51F165C8000888F8D /* Views */,
-				4E7A06A01F1647FD00888F8D /* Constants */,
 				4E7A06921F14F0A500888F8D /* Extensions */,
 				4E4640271F13CC3B00C8F94C /* Helpers */,
 				4E08FF6B1F13958500778FE7 /* Scenes */,
-				4E08FF6A1F13904400778FE7 /* Models */,
 				4EC2D1041F0D0E5200E51020 /* AppDelegate.swift */,
 				4E08FF671F1379EF00778FE7 /* Resources */,
 				4E08FF691F1379FE00778FE7 /* Supporting Files  */,
@@ -324,9 +305,23 @@
 		F93A02A02996886D0014492A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				F9A57C022996B7A200389403 /* BTServiceConfigurable.swift */,
 				F93A02A12996887B0014492A /* ColorPalette.swift */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		F9A57BFE299692CC00389403 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F93A0297299676140014492A /* StorageManager.swift */,
+				4E7A06A31F164D9E00888F8D /* Message.swift */,
+				4EC2D1351F0E53BA00E51020 /* Device.swift */,
+				4E7A06AA1F17683400888F8D /* User.swift */,
+				F93A029B2996849F0014492A /* WITAdvertData.swift */,
+				F9A57BFF2996936300389403 /* ChatService.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,7 +388,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 1420;
-				ORGANIZATIONNAME = "Efe Kocabas";
+				ORGANIZATIONNAME = NotMoniApps;
 				TargetAttributes = {
 					4EC2D1001F0D0E5200E51020 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -475,7 +470,6 @@
 				F93A029F299688300014492A /* AvatarPalette.swift in Sources */,
 				F93A029A2996766D0014492A /* Utility.swift in Sources */,
 				4EC2D1071F0D0E5200E51020 /* MainViewController.swift in Sources */,
-				4E5B29421F13E64F00BF6CDA /* Constants.swift in Sources */,
 				4E7A06AB1F17683400888F8D /* User.swift in Sources */,
 				4E5B29471F14BB0100BF6CDA /* MainCell.swift in Sources */,
 				4E08FF771F1395BC00778FE7 /* RegisterViewController.swift in Sources */,
@@ -489,11 +483,13 @@
 				4E7A06971F160E0A00888F8D /* ChatViewController.swift in Sources */,
 				F9018A6A299659410073F174 /* Avatar.swift in Sources */,
 				4E7A06A71F165C8B00888F8D /* PaddingLabel.swift in Sources */,
+				F9A57C002996936300389403 /* ChatService.swift in Sources */,
 				4E4640261F13C1B600C8F94C /* ColorPickerViewController.swift in Sources */,
 				4E7A069E1F161A7A00888F8D /* ChatCell.swift in Sources */,
 				F93A029C2996849F0014492A /* WITAdvertData.swift in Sources */,
 				4E7A06A41F164D9E00888F8D /* Message.swift in Sources */,
 				4E4640291F13CC4A00C8F94C /* AlertHelper.swift in Sources */,
+				F9A57C032996B7A200389403 /* BTServiceConfigurable.swift in Sources */,
 				F93A02A22996887B0014492A /* ColorPalette.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

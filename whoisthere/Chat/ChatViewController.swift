@@ -3,16 +3,18 @@
 //  whoisthere
 //
 //  Created by Efe Kocabas on 12/07/2017.
-//  Copyright © 2017 Efe Kocabas. All rights reserved.
 //
 
 import UIKit
 import CoreBluetooth
 
 class ChatViewController: UIViewController {
-    
-    var deviceUUID : UUID?
-    var deviceAttributes : String = ""
+
+    var device: Device?
+
+    var deviceUUID : UUID? { device?.peripheral.identifier }
+
+//    var deviceAttributes : String = ""
     var selectedPeripheral : CBPeripheral?
     var centralManager: CBCentralManager?
     var peripheralManager = CBPeripheralManager()
@@ -24,70 +26,67 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var bottomContainer: UIView!
-    
-    @IBAction func sendButtonClick(_ sender: Any) {
-        
-        if(!(messageTextField.text?.isEmpty)!) {
-            centralManager?.connect(selectedPeripheral!, options: nil)
-            messageTextField.resignFirstResponder()
-        }
-    }
-    
+
+    var chatServiceConfig = ChatServiceConfiguration()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.estimatedRowHeight = 68.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        
         tableView.register(UINib(nibName: cellDefinition, bundle: nil), forCellReuseIdentifier: cellDefinition)
         
-        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
+        centralManager = CBCentralManager(delegate: self, queue: .main)
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+
         messageTextField.delegate = self
+
         registerForKeyboardNotifications()
         
         setDeviceValues()
         sendButton.setTitle("_chat_send_button".localized, for: .normal)
     }
-    
-    func setDeviceValues() {
-        
-        let deviceData = deviceAttributes.components(separatedBy: "|")
-        
-        if (deviceData.count > 2) {
-            
-            self.navigationItem.title = deviceData[0]
-            tableView.backgroundColor = Constants.colors[Int(deviceData[2])!]
-        }
-        
-            
-    }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         deregisterFromKeyboardNotifications()
     }
-    
+
+    @IBAction func sendButtonClick(_ sender: Any) {
+
+        if(!(messageTextField.text?.isEmpty)!) {
+            centralManager?.connect(selectedPeripheral!, options: nil)
+            messageTextField.resignFirstResponder()
+        }
+    }
+
+    @objc func keyboardWasShown(notification: NSNotification){
+        animateViewMoving(up: true, notification: notification)
+    }
+
+    @objc func keyboardWillBeHidden(notification: NSNotification){
+
+        animateViewMoving(up: false, notification: notification)
+    }
+
+    func setDeviceValues() {
+        //        let deviceData = deviceAttributes.components(separatedBy: "|")
+
+        //        if (deviceData.count > 2) {
+        self.navigationItem.title = device?.name ?? "Unknown" // deviceData[0]
+        tableView.backgroundColor = device?.user?.color // AvatarPalette(rawValue: ) Constants.colors[Int(deviceData[2])!]
+    }
+
     // Following methods are needed for pushing bottomContainer view up and down when keyboard is shown and hidden.
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    
     func deregisterFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    
-    @objc func keyboardWasShown(notification: NSNotification){
-        animateViewMoving(up: true, notification: notification)
-    }
-    
-    @objc func keyboardWillBeHidden(notification: NSNotification){
-        
-        animateViewMoving(up: false, notification: notification)
-    }
-    
+
     func animateViewMoving (up:Bool, notification :NSNotification){
         let movementDuration:TimeInterval = 0.3
         
@@ -113,23 +112,18 @@ class ChatViewController: UIViewController {
         }
         
         let user = User()
-        let witAdvertData = WITAdvertData(user: user)
-
-//        let advertisementData = String(format: "%@|%d|%d", user.name, user.avatarId, user.colorId)
-        
-        peripheralManager.startAdvertising(witAdvertData.dict)
-            //[CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID], CBAdvertisementDataLocalNameKey: advertisementData])
+        chatServiceConfig.setDataDictValue(user.jsonString()!, for: CBAdvertisementDataLocalNameKey)
+        peripheralManager.startAdvertising(chatServiceConfig.advertDataDict)
     }
     
-    
-    func initService() {
-        
-        let serialService = CBMutableService(type: WITAdvertData.SERVICE_UUID, primary: true)
-        let rx = CBMutableCharacteristic(type: Constants.RX_UUID, properties: Constants.RX_PROPERTIES, value: nil, permissions: Constants.RX_PERMISSIONS)
-        serialService.characteristics = [rx]
-        
-        peripheralManager.add(serialService)
-    }
+//    func initService() {
+////        CBMutableService.ini
+//        let serialService = CBMutableService(type: WITAdvertData.SERVICE_UUID, primary: true)
+//        let rx = CBMutableCharacteristic(type: WITAdvertData.RX_UUID, properties: WITAdvertData.RX_PROPERTIES, value: nil, permissions: WITAdvertData.RX_PERMISSIONS)
+//        serialService.characteristics = [rx]
+//
+//        peripheralManager.add(serialService)
+//    }
     
     func appendMessageToChat(message: Message) {
         
@@ -142,11 +136,8 @@ class ChatViewController: UIViewController {
 extension ChatViewController : CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        
-        if (central.state == .poweredOn){
-            
-            self.centralManager?.scanForPeripherals(withServices: [WITAdvertData.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
-            
+        if (central.state == .poweredOn) {
+            self.centralManager?.scanForPeripherals(withServices: [ChatServiceConfiguration.uuid], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
     
@@ -176,25 +167,21 @@ extension ChatViewController : CBPeripheralDelegate {
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
+
+    private func sendMessage(to peripheral: CBPeripheral, using characteristic: CBCharacteristic) {
+        if let messageText = messageTextField.text, let messageData = messageText.data(using: .utf8) {
+            peripheral.writeValue(messageData, for: characteristic, type: .withResponse)
+            let message = Message(text: messageText, isSent: true)
+            appendMessageToChat(message: message)
+            messageTextField.text = String()
+        }
+    }
     
-    func peripheral(
-        _ peripheral: CBPeripheral,
-        didDiscoverCharacteristicsFor service: CBService,
-        error: Error?) {
-        
-        for characteristic in service.characteristics! {
-            
-            let characteristic = characteristic as CBCharacteristic
-            if (characteristic.uuid.isEqual(Constants.RX_UUID)) {
-                if let messageText = messageTextField.text {
-                    let data = messageText.data(using: .utf8)
-                    peripheral.writeValue(data!, for: characteristic, type: CBCharacteristicWriteType.withResponse)
-                    appendMessageToChat(message: Message(text: messageText, isSent: true))
-                    messageTextField.text = ""
-                    
-                }
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        if let characteristics = service.characteristics {
+            if let chatCharacteristic = characteristics.first(where: { $0.uuid == ChatServiceConfiguration.CharacteristicKeys.rx.uuid }) {
+                sendMessage(to: peripheral, using: chatCharacteristic)
             }
-            
         }
     }
 }
@@ -203,9 +190,8 @@ extension ChatViewController : CBPeripheralManagerDelegate {
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         
-        if (peripheral.state == .poweredOn){
-            
-            initService()
+        if (peripheral.state == .poweredOn) {
+            peripheral.add(chatServiceConfig.service)
             updateAdvertisingData()
         }
     }

@@ -21,6 +21,8 @@ class MainViewController: UICollectionViewController {
     
     var peripheralManager = CBPeripheralManager()
     var centralManager: CBCentralManager?
+
+    var chatServiceConfig = ChatServiceConfiguration()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,14 +68,8 @@ class MainViewController: UICollectionViewController {
         }
 
         let user = User()
-        let wisAdvertData = WITAdvertData(user: user)
-
-//        let advertDict: [String: Any] = [
-//            CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID],
-//            CBAdvertisementDataLocalNameKey: String(data: user.jsonData(), encoding: .utf8) ?? "ERROR"
-//        ]
-
-        peripheralManager.startAdvertising(wisAdvertData.dict)
+        chatServiceConfig.setDataDictValue(user.jsonString()!, for: CBAdvertisementDataLocalNameKey)
+        peripheralManager.startAdvertising(chatServiceConfig.advertDataDict)
     }
     
     func addOrUpdatePeripheralList(device: Device, list: inout Array<Device>) {
@@ -108,9 +104,9 @@ extension MainViewController {
 //        let advertisementData = device.wisAdvertData // name.components(separatedBy: "|")
         
 //        if (advertisementData.count > 1) {
-        cell.nameLabel?.text =  device.wisAdvertData.user.name // advertisementData[0]
-        cell.avatarImageView.image = device.wisAdvertData.user.avatar.uiImage // Avatar(rawValue: advertisementData[1] .ava Avatar.allCases[in] UIImage(named: String(format: "%@%@", Constants.kAvatarImagePrefix, advertisementData[1]))
-        cell.backgroundColor = device.wisAdvertData.user.color // Constants.colors[Int(advertisementData[2])!]
+        cell.nameLabel?.text =  device.user?.name // advertisementData[0]
+        cell.avatarImageView.image = device.user?.avatar.uiImage // Avatar(rawValue: advertisementData[1] .ava Avatar.allCases[in] UIImage(named: String(format: "%@%@", Constants.kAvatarImagePrefix, advertisementData[1]))
+        cell.backgroundColor = device.user?.color // Constants.colors[Int(advertisementData[2])!]
 //        } else {
 //            cell.nameLabel?.text = device.name
 //            cell.avatarImageView.image = Avatar.allCases.randomElement()!.uiImage
@@ -125,10 +121,13 @@ extension MainViewController {
 extension MainViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let device = visibleDevices[indexPath.row]
+
         let chatViewController = ChatViewController()
-        chatViewController.deviceUUID = visibleDevices[indexPath.row].peripheral.identifier
-        chatViewController.deviceAttributes = visibleDevices[indexPath.row].name
+        chatViewController.device = device
+
+//        chatViewController.deviceUUID = visibleDevices[indexPath.row].peripheral.identifier
+//        chatViewController.deviceAttributes = visibleDevices[indexPath.row].name
         self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 }
@@ -159,7 +158,7 @@ extension MainViewController : CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if (central.state == .poweredOn){
             
-            self.centralManager?.scanForPeripherals(withServices: [WITAdvertData.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            self.centralManager?.scanForPeripherals(withServices: [ChatServiceConfiguration.uuid], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
         }
     }
@@ -181,13 +180,3 @@ extension MainViewController : CBCentralManagerDelegate {
         self.addOrUpdatePeripheralList(device: device, list: &cachedDevices)
     }
 }
-
-
-
-
-
-
-
-
-
-

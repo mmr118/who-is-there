@@ -36,8 +36,8 @@ extension Data {
         } catch {
             fatalError(error.localizedDescription)
         }
-
     }
+
 }
 
 extension Encodable {
@@ -49,4 +49,9 @@ extension Encodable {
             fatalError(error.localizedDescription)
         }
     }
+
+    func jsonString() -> String? {
+        return String(data: jsonData(), encoding: .utf8)
+    }
+
 }

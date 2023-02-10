@@ -3,7 +3,6 @@
 //  whoisthere
 //
 //  Created by Efe Kocabas on 06/07/2017.
-//  Copyright © 2017 Efe Kocabas. All rights reserved.
 //
 
 import Foundation
@@ -14,15 +13,21 @@ struct Device {
     var name : String
     var messages = Array<String>()
 
-    var wisAdvertData: WITAdvertData
+    var advertDataDict: [String: Any]
     
     init(peripheral: CBPeripheral, name: String, advertData: [String: Any]) {
         self.peripheral = peripheral
         self.name = name
-        self.wisAdvertData = WITAdvertData(dict: advertData)
+        self.advertDataDict = advertData
     }
 
     mutating func updateAdvertData(_ advertData: [String: Any]) {
-        self.wisAdvertData = WITAdvertData(dict: advertData)
+        self.advertDataDict = advertData
     }
+
+    var user: User? {
+        guard let dataString = advertDataDict[CBAdvertisementDataLocalNameKey] as? String else { return nil }
+        return dataString.data(using: .utf8)?.jsonObject(User.self)
+    }
+
 }
