@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ColorPickerViewController: UICollectionViewController
-{
+class ColorPickerViewController: UICollectionViewController {
+
+    var storageManager: StorageManager { .shared }
+
     let reuseIdentifier = "ColorPickerCell"
     let columnCount = 3
     let margin : CGFloat = 10
@@ -44,10 +46,9 @@ extension ColorPickerViewController {
 extension ColorPickerViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        var userData =  UserData()
-        userData.colorId = indexPath.item
-        userData.save()
+        var user =  User()
+        user.colorId = indexPath.item
+        storageManager.save(user)
         self.navigationController?.popViewController(animated: true)
     }
 }

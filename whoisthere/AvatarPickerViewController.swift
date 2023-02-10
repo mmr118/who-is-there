@@ -8,8 +8,7 @@
 
 import UIKit
 
-class AvatarPickerViewController: UICollectionViewController
-{
+class AvatarPickerViewController: UICollectionViewController {
     let avatarCellReuseIdentifier = "AvatarPickerCell"
     let columnCount = 3
     let margin : CGFloat = 10
@@ -34,11 +33,9 @@ extension AvatarPickerViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: avatarCellReuseIdentifier, for: indexPath as IndexPath) as! AvatarPickerCell
-        
-        cell.avatarImageView.image = UIImage(named: "avatar/\(Avatar.allCases[indexPath.row].filename)")
-        
+        let avatar = Avatar(rawValue: indexPath.row) ?? .none
+        cell.avatarImageView.image = avatar.uiImage
         return cell
     }
 }
@@ -48,12 +45,11 @@ extension AvatarPickerViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        var userData =  UserData()
-        userData.avatarId = indexPath.item + 1
-        userData.save()
-        
+        var user =  User()
+        user.avatar = Avatar(rawValue: indexPath.item + 1) ?? .none
+        StorageManager.shared.save(user)
+        StorageManager.shared.setCurrentUser(user)
         self.navigationController?.popViewController(animated: true)
-        
     }
 }
 

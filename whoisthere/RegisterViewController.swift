@@ -8,8 +8,7 @@
 
 import UIKit
 
-class RegisterViewController: UIViewController, UITextFieldDelegate
-{
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
@@ -17,28 +16,24 @@ class RegisterViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var nextButton: UIButton!
     
     var isUpdateScreen : Bool = false
+
+    var storageManager: StorageManager { .shared }
     
     
     @IBAction func nextButtonClick(_ sender: Any) {
         
-        let userData = UserData()
+        let user = User()
         saveName()
         
-        if (userData.avatarId == 0) {
-            
+        if (user.avatar == .none) {
             AlertHelper.warn(delegate: self, message: "_alert_choose_avatar".localized)
-        }
-        else if (userData.name.isEmpty) {
+        } else if (user.name.isEmpty) {
             
             AlertHelper.warn(delegate: self, message: "_alert_enter_name".localized)
-        }
-        else {
-            
+        } else {
             if (isUpdateScreen) {
-                
                 self.navigationController?.popViewController(animated: true)
-            }
-            else {
+            } else {
                 
                 if let target = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController {
                     target.navigationItem.hidesBackButton = true;
@@ -50,11 +45,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate
     
     
     // MARK: View lifecycle
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        let userData = UserData()
-        isUpdateScreen = userData.hasAllDataFilled
+        let user = User()
+        isUpdateScreen = user.hasAllDataFilled
         setupUI()
     }
     
@@ -65,11 +59,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate
     }
     
     func saveName() {
-        
-        var userData = UserData()
-        let name : String = nameTextField.text ?? ""
-        userData.name = name
-        userData.save()
+        var user = User()
+        let name: String = nameTextField.text ?? ""
+        user.name = name
+
+        storageManager.save(user)
     }
     
     func setupUI() {
@@ -81,17 +75,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate
     
     func initData() {
         
-        let userData = UserData()
+        let user = User()
         
-        self.navigationItem.title = userData.hasAllDataFilled ? "_register_title".localized : "_profile_title".localized
+        self.navigationItem.title = user.hasAllDataFilled ? "_register_title".localized : "_profile_title".localized
         
-        let buttonTitle = userData.hasAllDataFilled ? "_save".localized : "_next".localized
+        let buttonTitle = user.hasAllDataFilled ? "_save".localized : "_next".localized
         nextButton.setTitle(buttonTitle, for: .normal)
         
-        avatarButton.setImage(UIImage(named: String(format: "%@%d", Constants.kAvatarImagePrefix, userData.avatarId)), for: UIControlState.normal)
-        self.view.backgroundColor = Constants.colors[userData.colorId]
+        avatarButton.setImage(user.avatar.uiImage, for: .normal) // UIImage(named: String(format: "%@%d", Constants.kAvatarImagePrefix, user.avatarId)), for: UIControlState.normal)
+        self.view.backgroundColor = Constants.colors[user.colorId]
         
-        nameTextField.text = userData.name
+        nameTextField.text = user.name
     }
     
     override func viewWillAppear(_ animated: Bool) {

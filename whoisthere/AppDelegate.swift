@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let userData =  UserData()
+        let user =  User()
         
         // check if all register information required (name, avatar, color) is filled
-        if (userData.hasAllDataFilled) {
+        if (user.hasAllDataFilled) {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewController") as! MainViewController

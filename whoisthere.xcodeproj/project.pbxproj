@@ -23,7 +23,7 @@
 		4E7A06A41F164D9E00888F8D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06A31F164D9E00888F8D /* Message.swift */; };
 		4E7A06A71F165C8B00888F8D /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06A61F165C8B00888F8D /* PaddingLabel.swift */; };
 		4E7A06A91F175BE600888F8D /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06A81F175BE600888F8D /* ViewHelper.swift */; };
-		4E7A06AB1F17683400888F8D /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06AA1F17683400888F8D /* UserData.swift */; };
+		4E7A06AB1F17683400888F8D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A06AA1F17683400888F8D /* User.swift */; };
 		4EC2D1051F0D0E5200E51020 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2D1041F0D0E5200E51020 /* AppDelegate.swift */; };
 		4EC2D1071F0D0E5200E51020 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2D1061F0D0E5200E51020 /* MainViewController.swift */; };
 		4EC2D10A1F0D0E5200E51020 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EC2D1081F0D0E5200E51020 /* Main.storyboard */; };
@@ -34,6 +34,11 @@
 		4EC2D1341F0D0FB500E51020 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC2D1331F0D0FB500E51020 /* CoreBluetooth.framework */; };
 		4EC2D1361F0E53BA00E51020 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2D1351F0E53BA00E51020 /* Device.swift */; };
 		F9018A6A299659410073F174 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9018A69299659410073F174 /* Avatar.swift */; };
+		F93A0298299676140014492A /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A0297299676140014492A /* StorageManager.swift */; };
+		F93A029A2996766D0014492A /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A02992996766D0014492A /* Utility.swift */; };
+		F93A029C2996849F0014492A /* WITAdvertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A029B2996849F0014492A /* WITAdvertData.swift */; };
+		F93A029F299688300014492A /* AvatarPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A029E299688300014492A /* AvatarPalette.swift */; };
+		F93A02A22996887B0014492A /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93A02A12996887B0014492A /* ColorPalette.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +75,7 @@
 		4E7A06A31F164D9E00888F8D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		4E7A06A61F165C8B00888F8D /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		4E7A06A81F175BE600888F8D /* ViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
-		4E7A06AA1F17683400888F8D /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		4E7A06AA1F17683400888F8D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4EC2D1011F0D0E5200E51020 /* whoisthere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whoisthere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC2D1041F0D0E5200E51020 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EC2D1061F0D0E5200E51020 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +92,11 @@
 		4EC2D1331F0D0FB500E51020 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		4EC2D1351F0E53BA00E51020 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		F9018A69299659410073F174 /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
+		F93A0297299676140014492A /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		F93A02992996766D0014492A /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		F93A029B2996849F0014492A /* WITAdvertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WITAdvertData.swift; sourceTree = "<group>"; };
+		F93A029E299688300014492A /* AvatarPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPalette.swift; sourceTree = "<group>"; };
+		F93A02A12996887B0014492A /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,9 +147,11 @@
 		4E08FF6A1F13904400778FE7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F93A0297299676140014492A /* StorageManager.swift */,
 				4E7A06A31F164D9E00888F8D /* Message.swift */,
 				4EC2D1351F0E53BA00E51020 /* Device.swift */,
-				4E7A06AA1F17683400888F8D /* UserData.swift */,
+				4E7A06AA1F17683400888F8D /* User.swift */,
+				F93A029B2996849F0014492A /* WITAdvertData.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -258,7 +270,9 @@
 		4EC2D1031F0D0E5200E51020 /* whoisthere */ = {
 			isa = PBXGroup;
 			children = (
-				F9018A69299659410073F174 /* Avatar.swift */,
+				F93A02A02996886D0014492A /* Protocols */,
+				F93A02992996766D0014492A /* Utility.swift */,
+				F93A029D299688040014492A /* Enums */,
 				4E7A06A51F165C8000888F8D /* Views */,
 				4E7A06A01F1647FD00888F8D /* Constants */,
 				4E7A06921F14F0A500888F8D /* Extensions */,
@@ -296,6 +310,23 @@
 				4EC2D1331F0D0FB500E51020 /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F93A029D299688040014492A /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				F9018A69299659410073F174 /* Avatar.swift */,
+				F93A029E299688300014492A /* AvatarPalette.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		F93A02A02996886D0014492A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F93A02A12996887B0014492A /* ColorPalette.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,14 +472,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93A029F299688300014492A /* AvatarPalette.swift in Sources */,
+				F93A029A2996766D0014492A /* Utility.swift in Sources */,
 				4EC2D1071F0D0E5200E51020 /* MainViewController.swift in Sources */,
 				4E5B29421F13E64F00BF6CDA /* Constants.swift in Sources */,
-				4E7A06AB1F17683400888F8D /* UserData.swift in Sources */,
+				4E7A06AB1F17683400888F8D /* User.swift in Sources */,
 				4E5B29471F14BB0100BF6CDA /* MainCell.swift in Sources */,
 				4E08FF771F1395BC00778FE7 /* RegisterViewController.swift in Sources */,
 				4EC2D1361F0E53BA00E51020 /* Device.swift in Sources */,
 				4E08FF871F13AFF300778FE7 /* AvatarPickerCell.swift in Sources */,
 				4E7A06A91F175BE600888F8D /* ViewHelper.swift in Sources */,
+				F93A0298299676140014492A /* StorageManager.swift in Sources */,
 				4EC2D1051F0D0E5200E51020 /* AppDelegate.swift in Sources */,
 				4E08FF841F13A0F500778FE7 /* AvatarPickerViewController.swift in Sources */,
 				4E7A06941F14F0BA00888F8D /* StringExtension.swift in Sources */,
@@ -457,8 +491,10 @@
 				4E7A06A71F165C8B00888F8D /* PaddingLabel.swift in Sources */,
 				4E4640261F13C1B600C8F94C /* ColorPickerViewController.swift in Sources */,
 				4E7A069E1F161A7A00888F8D /* ChatCell.swift in Sources */,
+				F93A029C2996849F0014492A /* WITAdvertData.swift in Sources */,
 				4E7A06A41F164D9E00888F8D /* Message.swift in Sources */,
 				4E4640291F13CC4A00C8F94C /* AlertHelper.swift in Sources */,
+				F93A02A22996887B0014492A /* ColorPalette.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,59 +41,53 @@ class MainViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
         updateAdvertisingData()
     }
     
     @objc func rightButtonAction(sender: UIBarButtonItem) {
-        
         let registerVC = self.storyboard?.instantiateViewController(withIdentifier: "RegisterController") as! RegisterViewController
         self.navigationController?.pushViewController(registerVC, animated: true)
     }
     
     func scheduledTimerWithTimeInterval(){
-        
-        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.clearPeripherals), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(clearPeripherals), userInfo: nil, repeats: true)
     }
     
     @objc func clearPeripherals(){
-        
         visibleDevices = cachedDevices
         cachedDevices.removeAll()
         collectionView?.reloadData()
     }
     
     func updateAdvertisingData() {
-        
         if (peripheralManager.isAdvertising) {
             peripheralManager.stopAdvertising()
         }
-        
-        let userData = UserData()
-        let advertisementData = String(format: "%@|%d|%d", userData.name, userData.avatarId, userData.colorId)
-        
-        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID], CBAdvertisementDataLocalNameKey: advertisementData])
+
+        let user = User()
+        let wisAdvertData = WITAdvertData(user: user)
+
+//        let advertDict: [String: Any] = [
+//            CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID],
+//            CBAdvertisementDataLocalNameKey: String(data: user.jsonData(), encoding: .utf8) ?? "ERROR"
+//        ]
+
+        peripheralManager.startAdvertising(wisAdvertData.dict)
     }
     
     func addOrUpdatePeripheralList(device: Device, list: inout Array<Device>) {
-
         if !list.contains(where: { $0.peripheral.identifier == device.peripheral.identifier }) {
-            
             list.append(device)
             collectionView?.reloadData()
         } else if list.contains(where: { $0.peripheral.identifier == device.peripheral.identifier && $0.name == "unknown"}) && device.name != "unknown" {
-            
             for index in 0..<list.count {
-                
                 if (list[index].peripheral.identifier == device.peripheral.identifier) {
-                    
                     list[index].name = device.name
                     collectionView?.reloadData()
                     break
                 }
             }
-            
         }
     }
 }
@@ -107,24 +101,21 @@ extension MainViewController {
     
     // make a cell for each cell index path
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellReuseIdentifier, for: indexPath as IndexPath) as! MainCell
-        
+
         let device = visibleDevices[indexPath.row]
         
-        let advertisementData = device.name.components(separatedBy: "|")
+//        let advertisementData = device.wisAdvertData // name.components(separatedBy: "|")
         
-        if (advertisementData.count > 1) {
-            
-            cell.nameLabel?.text = advertisementData[0]
-            cell.avatarImageView.image = UIImage(named: String(format: "%@%@", Constants.kAvatarImagePrefix, advertisementData[1]))
-            cell.backgroundColor = Constants.colors[Int(advertisementData[2])!]
-        }
-        else {
-            cell.nameLabel?.text = device.name
-            cell.avatarImageView.image = UIImage(named: "avatar0")
-            cell.backgroundColor = UIColor.gray
-        }
+//        if (advertisementData.count > 1) {
+        cell.nameLabel?.text =  device.wisAdvertData.user.name // advertisementData[0]
+        cell.avatarImageView.image = device.wisAdvertData.user.avatar.uiImage // Avatar(rawValue: advertisementData[1] .ava Avatar.allCases[in] UIImage(named: String(format: "%@%@", Constants.kAvatarImagePrefix, advertisementData[1]))
+        cell.backgroundColor = device.wisAdvertData.user.color // Constants.colors[Int(advertisementData[2])!]
+//        } else {
+//            cell.nameLabel?.text = device.name
+//            cell.avatarImageView.image = Avatar.allCases.randomElement()!.uiImage
+//            cell.backgroundColor = UIColor.gray
+//        }
         
         return cell
     }
@@ -168,7 +159,7 @@ extension MainViewController : CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if (central.state == .poweredOn){
             
-            self.centralManager?.scanForPeripherals(withServices: [Constants.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
+            self.centralManager?.scanForPeripherals(withServices: [WITAdvertData.SERVICE_UUID], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
             
         }
     }
@@ -179,11 +170,12 @@ extension MainViewController : CBCentralManagerDelegate {
         
         if let advertisementName = advertisementData[CBAdvertisementDataLocalNameKey] as? String {
             
+            
             peripheralName = advertisementName
             cachedPeripheralNames[peripheral.identifier.description] = peripheralName
         }
         
-        let device = Device(peripheral: peripheral, name: peripheralName)
+        let device = Device(peripheral: peripheral, name: peripheralName, advertData: advertisementData)
         
         self.addOrUpdatePeripheralList(device: device, list: &visibleDevices)
         self.addOrUpdatePeripheralList(device: device, list: &cachedDevices)

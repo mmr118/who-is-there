@@ -68,15 +68,13 @@ class ChatViewController: UIViewController {
     }
     
     // Following methods are needed for pushing bottomContainer view up and down when keyboard is shown and hidden.
-    func registerForKeyboardNotifications()
-    {
+    func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
-    func deregisterFromKeyboardNotifications()
-    {
+    func deregisterFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -114,16 +112,19 @@ class ChatViewController: UIViewController {
             peripheralManager.stopAdvertising()
         }
         
-        let userData = UserData()
-        let advertisementData = String(format: "%@|%d|%d", userData.name, userData.avatarId, userData.colorId)
+        let user = User()
+        let witAdvertData = WITAdvertData(user: user)
+
+//        let advertisementData = String(format: "%@|%d|%d", user.name, user.avatarId, user.colorId)
         
-        peripheralManager.startAdvertising([CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID], CBAdvertisementDataLocalNameKey: advertisementData])
+        peripheralManager.startAdvertising(witAdvertData.dict)
+            //[CBAdvertisementDataServiceUUIDsKey:[Constants.SERVICE_UUID], CBAdvertisementDataLocalNameKey: advertisementData])
     }
     
     
     func initService() {
         
-        let serialService = CBMutableService(type: Constants.SERVICE_UUID, primary: true)
+        let serialService = CBMutableService(type: WITAdvertData.SERVICE_UUID, primary: true)
         let rx = CBMutableCharacteristic(type: Constants.RX_UUID, properties: Constants.RX_PROPERTIES, value: nil, permissions: Constants.RX_PERMISSIONS)
         serialService.characteristics = [rx]
         
@@ -252,8 +253,7 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource {
             cell.sentMessage.isHidden = false
             cell.sentMessage.text = message.text
             cell.sentMessage.sizeToFit()
-        }
-        else {
+        } else {
             
             cell.sentMessage.isHidden = true
             cell.receivedMessage.isHidden = false
