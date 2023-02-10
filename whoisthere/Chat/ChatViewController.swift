@@ -93,7 +93,7 @@ class ChatViewController: UIViewController {
     func animateViewMoving (up:Bool, notification :NSNotification){
         let movementDuration:TimeInterval = 0.3
         
-        var info = notification.userInfo!
+        let info = notification.userInfo!
         let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
         let moveValue = keyboardSize?.height ?? 0
         let movement:CGFloat = ( up ? -moveValue : moveValue)
@@ -214,7 +214,7 @@ extension ChatViewController : CBPeripheralManagerDelegate {
         for request in requests {
             if let value = request.value {
                 
-                let messageText = String(data: value, encoding: String.Encoding.utf8) as String!
+                let messageText = String(data: value, encoding: String.Encoding.utf8)
                 appendMessageToChat(message: Message(text: messageText!, isSent: false))
             }
             self.peripheralManager.respond(to: request, withResult: .success)
