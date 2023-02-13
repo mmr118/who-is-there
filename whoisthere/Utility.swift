@@ -10,9 +10,13 @@ import UIKit
 
 extension UIColor {
 
+    static let accentColor = UIColor(named: "AccentColor")!
+
     typealias Avatar = AvatarPalette
 
     static let avatarColors: [UIColor] = Avatar.allCases.map(\.color)
+
+
 
 }
 

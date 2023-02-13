@@ -22,6 +22,8 @@
 	<string>Privacy - Bluetooth Peripheral Usage Description</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app uses this device as bluetooth peripheral</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This app uses this device as bluetooth peripheral</string>
 	<key>UIBackgroundModes</key>

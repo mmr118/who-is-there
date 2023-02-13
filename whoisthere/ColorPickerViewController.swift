@@ -15,6 +15,8 @@ class ColorPickerViewController: UICollectionViewController {
     let reuseIdentifier = "ColorPickerCell"
     let columnCount = 3
     let margin : CGFloat = 10
+
+    weak var selectionDelegate: IndexSelectionDelegate?
     
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -33,11 +35,11 @@ extension ColorPickerViewController {
     
     // make a cell for each cell index path
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath)
-        
+        let selected = selectionDelegate?.indexIsSelected(self, at: indexPath.row) ?? false
         cell.backgroundColor = AvatarPalette(rawValue: indexPath.item)?.color
-        
+        cell.layer.borderColor = UIColor.accentColor.cgColor
+        cell.layer.borderWidth = selected ? 2 : 0
         return cell
     }
 }
@@ -46,9 +48,7 @@ extension ColorPickerViewController {
 extension ColorPickerViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var user =  User()
-        user.paletteValue = indexPath.item
-        storageManager.save(user)
+        selectionDelegate?.indexSelector(self, didSelect: indexPath.row)
         self.navigationController?.popViewController(animated: true)
     }
 }

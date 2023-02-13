@@ -8,18 +8,24 @@
 
 import UIKit
 
+protocol IndexSelectionDelegate: AnyObject {
+    func indexIsSelected(_ valueSelector: UICollectionViewController, at index: Int) -> Bool
+    func indexSelector(_ valueSelector: UICollectionViewController, didSelect valueIndex: Int)
+}
+
 class AvatarPickerViewController: UICollectionViewController {
+
     let avatarCellReuseIdentifier = "AvatarPickerCell"
     let columnCount = 3
     let margin : CGFloat = 10
     let avatarCount = 8
+
+    weak var selectionDelegate: IndexSelectionDelegate?
     
     
     // MARK: View lifecycle
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         ViewHelper.setCollectionViewLayout(collectionView: collectionView, margin: margin)
     }
 }
@@ -29,13 +35,16 @@ class AvatarPickerViewController: UICollectionViewController {
 extension AvatarPickerViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return avatarCount
+        return Avatar.allCases.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: avatarCellReuseIdentifier, for: indexPath as IndexPath) as! AvatarPickerCell
+        let selected = selectionDelegate?.indexIsSelected(self, at: indexPath.row) ?? false
         let avatar = Avatar(rawValue: indexPath.row) ?? .none
         cell.avatarImageView.image = avatar.uiImage
+        cell.layer.borderColor = UIColor.accentColor.cgColor
+        cell.layer.borderWidth = selected ? 2 : 0
         return cell
     }
 }
@@ -44,11 +53,7 @@ extension AvatarPickerViewController {
 extension AvatarPickerViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        var user =  User()
-        user.avatar = Avatar(rawValue: indexPath.item + 1) ?? .none
-        StorageManager.shared.save(user)
-        StorageManager.shared.setCurrentUser(user)
+        selectionDelegate?.indexSelector(self, didSelect: indexPath.item)
         self.navigationController?.popViewController(animated: true)
     }
 }
