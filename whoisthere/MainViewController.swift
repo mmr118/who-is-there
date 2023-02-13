@@ -100,19 +100,9 @@ extension MainViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCellReuseIdentifier, for: indexPath as IndexPath) as! MainCell
 
         let device = visibleDevices[indexPath.row]
-        
-//        let advertisementData = device.wisAdvertData // name.components(separatedBy: "|")
-        
-//        if (advertisementData.count > 1) {
         cell.nameLabel?.text =  device.user?.name // advertisementData[0]
         cell.avatarImageView.image = device.user?.avatar.uiImage // Avatar(rawValue: advertisementData[1] .ava Avatar.allCases[in] UIImage(named: String(format: "%@%@", Constants.kAvatarImagePrefix, advertisementData[1]))
         cell.backgroundColor = device.user?.color // Constants.colors[Int(advertisementData[2])!]
-//        } else {
-//            cell.nameLabel?.text = device.name
-//            cell.avatarImageView.image = Avatar.allCases.randomElement()!.uiImage
-//            cell.backgroundColor = UIColor.gray
-//        }
-        
         return cell
     }
 }
@@ -125,9 +115,6 @@ extension MainViewController {
 
         let chatViewController = ChatViewController()
         chatViewController.device = device
-
-//        chatViewController.deviceUUID = visibleDevices[indexPath.row].peripheral.identifier
-//        chatViewController.deviceAttributes = visibleDevices[indexPath.row].name
         self.navigationController?.pushViewController(chatViewController, animated: true)
     }
 }

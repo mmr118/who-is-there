@@ -36,7 +36,7 @@ extension Array where Element: Encodable {
 extension Data {
     func jsonObject<T>(_ type: T.Type) -> T where T : Decodable {
         do {
-            return try JSONDecoder().decode(type, from: self)
+            return try JSONDecoder().decode(T.self, from: self)
         } catch {
             fatalError(error.localizedDescription)
         }
